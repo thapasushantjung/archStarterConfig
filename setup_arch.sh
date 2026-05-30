@@ -47,18 +47,25 @@ zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 EOF
 
+echo "Configuring NPM global packages..."
+mkdir -p "$HOME/.npm-global"
+npm config set prefix "$HOME/.npm-global"
+
 echo "Configuring .zshrc..."
 ZSHRC="$HOME/.zshrc"
 
 # Ensure .zshrc exists
 touch "$ZSHRC"
 
-# Add Antidote, Starship, Zoxide, and FZF configuration to .zshrc
+# Add Antidote, Starship, Zoxide, FZF, and NPM configuration to .zshrc
 # We use a marker to avoid duplicate entries if the script is run multiple times
 if ! grep -q "### ARCH SETUP CONFIG ###" "$ZSHRC"; then
     cat <<EOF >> "$ZSHRC"
 
 ### ARCH SETUP CONFIG ###
+
+# NPM Global Packages
+export PATH="\$HOME/.npm-global/bin:\$PATH"
 
 # Antidote
 source /usr/share/zsh-antidote/antidote.zsh

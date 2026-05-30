@@ -31,26 +31,29 @@ The script creates `~/.zsh_plugins.txt` and populates it with:
 
 It then injects the `antidote load` command into your `~/.zshrc`.
 
-## 4. Starship Prompt
+## 4. NPM Global Configuration
+The script configures `npm` to install global packages in `~/.npm-global` to avoid using `sudo`. It also adds `~/.npm-global/bin` to your `$PATH` in `~/.zshrc`.
+
+## 5. Starship Prompt
 The script applies the **Pastel Powerline** preset:
 ```bash
 starship preset pastel-powerline -o ~/.config/starship.toml
 ```
 This gives you a beautiful, informative, and high-performance prompt.
 
-## 5. FZF, FD, and BAT Integration
+## 6. FZF, FD, and BAT Integration
 This is the "Power User" configuration.
 - **`fd`** is set as the default engine for FZF, making it respect your `.gitignore` and find files instantly.
 - **`bat`** is used as a previewer, so when you scroll through results in FZF, you see a syntax-highlighted preview of the file content on the right.
 
-## 6. User Aliases
+## 7. User Aliases
 The script adds several quality-of-life aliases to your `.zshrc`:
 - `ls` & `ll`: Maps to `eza` for icons and better formatting.
 - `cat`: Maps to `bat` for highlighted file viewing.
 - `docker-ui`: Maps to `lazydocker`.
 
 
-## 7. Usage
+## 8. Usage
 
 Run the setup script:
 ```bash
