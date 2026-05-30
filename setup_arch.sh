@@ -67,9 +67,9 @@ if ! grep -q "### ARCH SETUP CONFIG ###" "$ZSHRC"; then
 ### ARCH SETUP CONFIG ###
 
 # History configuration
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt share_history
@@ -78,22 +78,26 @@ setopt hist_save_no_dups
 setopt hist_ignore_space
 
 # NPM Global Packages
-export PATH="\$HOME/.npm-global/bin:\$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Antidote
 source /usr/share/zsh-antidote/antidote.zsh
 antidote load
 
 # Starship
-eval "\$(starship init zsh)"
+eval "$(starship init zsh)"
 
 # Zoxide
-eval "\$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
 
-# FZF with fd and bat
+# FZF configuration
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="\$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
+
+# FZF key bindings and completion
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 
 # Aliases for suggested upgrades
 alias ls='eza --icons'
@@ -101,7 +105,11 @@ alias ll='eza -lh --icons'
 alias cat='bat'
 alias docker-ui='lazydocker'
 
+# Explicitly load history (ensures it's available in new sessions)
+fc -R "$HISTFILE"
+
 ### END ARCH SETUP CONFIG ###
+
 EOF
 fi
 
