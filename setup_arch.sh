@@ -9,6 +9,7 @@ PACKAGES=(
     neovim
     base-devel
     cmake
+    openssh
     unzip
     nodejs
     npm
@@ -33,6 +34,7 @@ PACKAGES=(
     lazydocker
     tmux
     dbeaver
+    zsh
     zsh-antidote
 )
 
@@ -63,6 +65,17 @@ if ! grep -q "### ARCH SETUP CONFIG ###" "$ZSHRC"; then
     cat <<EOF >> "$ZSHRC"
 
 ### ARCH SETUP CONFIG ###
+
+# History configuration
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt extended_history
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_space
 
 # NPM Global Packages
 export PATH="\$HOME/.npm-global/bin:\$PATH"
