@@ -62,7 +62,7 @@ touch "$ZSHRC"
 # Add Antidote, Starship, Zoxide, FZF, and NPM configuration to .zshrc
 # We use a marker to avoid duplicate entries if the script is run multiple times
 if ! grep -q "### ARCH SETUP CONFIG ###" "$ZSHRC"; then
-    cat <<EOF >> "$ZSHRC"
+    cat <<'EOF' >> "$ZSHRC"
 
 ### ARCH SETUP CONFIG ###
 
@@ -116,5 +116,19 @@ fi
 echo "Applying Starship 'pastel-powerline' preset..."
 mkdir -p "$HOME/.config"
 starship preset pastel-powerline -o "$HOME/.config/starship.toml"
+
+echo "Setting zsh as the default shell..."
+ZSH_PATH="/usr/bin/zsh"
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    if ! grep -q "^$ZSH_PATH$" /etc/shells; then
+        ZSH_PATH=$(which zsh)
+        if ! grep -q "^$ZSH_PATH$" /etc/shells; then
+            echo "Adding $ZSH_PATH to /etc/shells..."
+            echo "$ZSH_PATH" | sudo tee -a /etc/shells
+        fi
+    fi
+    echo "Please enter your password to change your default shell:"
+    chsh -s "$ZSH_PATH"
+fi
 
 echo "Setup complete! Please restart your terminal or run 'source ~/.zshrc'."
